@@ -115,7 +115,7 @@ On the LaTeX preamble, import the dependency packages:
 ### Table of parameters
 When you want to include the table of simulation parameters, use the following:
 
-```
+```Latex
 \begin{table}
     \input{tables/params.tex}
 \end{table}
@@ -129,7 +129,7 @@ To reference it in the text, use the label defined in Matlab. In the example we 
 
 When you want to inlcude your generated figures, use the following code:
 
-```
+```Latex
 \begin{figure}[t!]
     \centering
     \resizebox{\columnwidth}{!}{\input{figures/my_figure.tex}}
