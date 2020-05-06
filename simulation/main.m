@@ -61,7 +61,7 @@ matlab2tikz('../paper/figures/sine_waves.tex')
 % included in your paper code. The class is not very well documented,
 % but the general idea is to use it in the following way:
 %
-% TableRow(text, value, unit, variable name, reference, additional parameters)
+% TableRow('Description text', value, 'unit', 'variable name', 'reference', ...additional parameters)
 % 
 % If no additional parameters are passed, the other positional arguemnts
 % that preced it may be ommited. Otherwise, send an empty string.

@@ -10,7 +10,9 @@ The first thing to do, is make sure your environment is properly setup. For that
 
 # Dependencies
 * Matlab
-* matlab2tikz
+    * matlab2tikz
+    * TableRow
+    * printTable
 * LaTeX
     Packages:
     * pgfplots
@@ -20,6 +22,7 @@ The first thing to do, is make sure your environment is properly setup. For that
     * amsmath
 
 This tutorial assumes that you have a LaTeX environment configured and that you know how to install and update packages. If that is not the case, you first need to sort this out.
+`TableRow` and `printTable` are a class and a function (respectively) provided in this repository. Make sure to add them to your path.
 
 ## matlab2tikz
 `matlab2tikz` is just a collection of .m files which contain the code you need. The reason you need to "install" it separetely is because it is not part of the official Mathworks libraries. It is maintained by the community.
@@ -49,19 +52,31 @@ Remember to add the src location to your Matlab PATH:
 # Explanation
 Below, I will give a brief explanation on how to do the same thing as this example on your own paper.
 
+## The directory structure
+Create the following structure for your project:
+
+```
+root_dir/
+    simulations/
+    paper/
+        figures/
+        tables/
+```
+
 ## The Matlab code
 
 ### Figures
-In order to use the `matlab2tikz` function, simply call it giving as argument the name of the destination file. Since we want to tie our simulation with our paper, we give a path to a file inside the directory with the LaTeX source.
+`matlab2tikz` is a function which gets the active figure in Matlab and exports it to TikZ (a graphical library for LaTeX).
 
-```
+In order to use `matlab2tikz`, simply call it giving as argument the name of the destination file. Since we want to tie our simulation with our paper, we give a path to a file inside the directory with the LaTeX source.
+
+```Matlab
 figure
 plot(t, x)
 matlab2tikz('../paper/figures/my_figure.tex')
 ```
 
-Note that, the name of the figure can be chosen arbitrarely.
-Also, the function is very good at preserving matlab style configurations on the figure. On the example I have set the grid, labels, legends, and everything was preserved to TikZ (the graphical library for LaTeX).
+The function is very good at preserving matlab style configurations on the figure. On the example I have set the grid, labels, legends, and everything was preserved to TikZ.
 
 ### Table
 To generate the table automatically, I created a class to hold the information desired and a function to print the table according to a list of rows.
@@ -69,15 +84,21 @@ To generate the table automatically, I created a class to hold the information d
 To use it, create your rows and add them to an array:
 
 ```Matlab
-array(1) = TableRow('text', value, 'unit', 'variable name', 'reference')
-array(end + 1) = TableRow('text', value, 'unit', 'variable name', 'reference')
+array(1) = TableRow('Description text', value, 'unit', 'variable name', 'reference')
+array(end + 1) = TableRow('Description text', value, 'unit', 'variable name', 'reference')
 ```
 
 Note that, the reference parameter refers to the bib handle value for the reference where you obtained that parameter. If you want, you may leave it blank (`''`). Just remember that it is better if you can find a source for the value you chose for your simulation.
 
-## The LaTeX document
+Once you have added all your parameters, add the instruction to generate the table:
 
-Create a directory for your LaTeX source code, and add 2 sub-directories named `figures` and `tables`.
+```Matlab
+printTable(array,'../paper/tables/params', 'tb:params')
+```
+
+Note that, we gave the `'tb:params'` label to our table. This will be usefull to reference it on the text of our paper.
+
+## The LaTeX document
 
 ### Preamble
 On the LaTeX preamble, import the dependency packages:
@@ -102,7 +123,7 @@ When you want to include the table of simulation parameters, use the following:
 
 Note that, the file name can be configured by you when you prepare the matlab code.
 
-To reference it in the text, choose whichever label you want. In the example we use `tb:params`.
+To reference it in the text, use the label defined in Matlab. In the example we use `tb:params`.
 
 ### Figures
 
@@ -112,6 +133,7 @@ When you want to inlcude your generated figures, use the following code:
 \begin{figure}[t!]
     \centering
     \resizebox{\columnwidth}{!}{\input{figures/my_figure.tex}}
-    \caption{My caption.}\label{fig:sine_waves}
+    \caption{My caption.}\label{fig:my_fig}
 \end{figure}
 ```
+
