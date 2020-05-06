@@ -1,0 +1,55 @@
+\documentclass{IEEEtran}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{lipsum}
+\usepackage[flushleft]{threeparttable}
+\usepackage{booktabs}
+\usepackage{amsmath}
+
+
+\title{Difference in Sine Waves According to Amplitude, Frequency and Initial Phase.}
+\author{João Pedro Battistella Nadas}
+
+
+\begin{document}
+\maketitle
+\section{Introduction}
+Sine waves are cool.
+They can be used in a myriad of engineering and mathematics applications, such as fourier transforms, telecommunications, and many others. 
+In this paper we aim to show the differences of sine waves when they have different frequencies, amplitudes and initial phases.
+
+\section{System Model}
+A sine wave is expressed as
+\begin{equation}
+    V(t) = A \sin(2\pi f t + \theta_0),
+\end{equation}
+where $V(t)$ is the value of the sine at a given time $t$, $A$ is the amplitude, $f$ is the frequency, in Hz, and $\theta_0$ is the initial phase, in radians.
+
+In order to represent the parameters of different sine curves, we add a subscript with a number to each of the variables above. This way, if we are talking about the first sine wave parameters we would use $A_1$, $f_1$, and $\theta_{0,1}$ to represent its amplitude, frequency and initial phase, respectively.
+
+\section{Proposed Approach}
+We propose to show 2 different sine waves, and visualize the difference in frequency and amplitude in a graphical manner.
+
+\section{Results}
+
+We have built a Matlab simulation to show this differences. Table~\ref{tb:params} contains the simulation parameters.
+
+\begin{table}[h!]
+    \input{tables/params.tex}
+\end{table}
+
+As we can see in Fig.~\ref{fig:sine_waves}, the two sine waves are different, depending on $f$, $A$ and $\theta_0$.
+
+\begin{figure}[t!]
+    \centering
+    \resizebox{\columnwidth}{!}{\input{figures/sine_waves.tex}}
+    \caption{This is my figure with 2 sine waves.}\label{fig:sine_waves}
+\end{figure}
+
+\section{Conclusion}
+So, we can conclude that frequency, initial phase and amplitude influence a sine wave's behavior.
+
+\bibliographystyle{IEEEtran}
+\bibliography{./references}
+
+\end{document}
